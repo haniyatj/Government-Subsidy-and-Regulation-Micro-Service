@@ -1,7 +1,7 @@
 
 //const SubsidyApplication = require('../models/SubsidyApplication'); //we'll use path that the DB team gives us for the shared models folder
 
-const getApplicationStatus = async (req, res) => {
+exports.getApplicationStatus = async (req, res) => {
     try {
         const application = await SubsidyApplication.findById(req.params.id);
         if (!application) {
@@ -13,7 +13,7 @@ const getApplicationStatus = async (req, res) => {
     }
 };
 
-const changeApplicationStatus = async (req, res) => {
+exports.changeApplicationStatus = async (req, res) => {
     try {
         const application = await SubsidyApplication.findById(req.params.id);
         if (application) {
@@ -34,4 +34,40 @@ const changeApplicationStatus = async (req, res) => {
     }
 };
 
-module.exports = { getApplicationStatus, changeApplicationStatus };
+exports.submitApplication = async (req, res) => {
+    try {
+        const { id: farmerId } = req.params; // Get farmerId from URL parameters
+        const {
+            subsidyId,
+            subsidyType,
+            supportingDocuments,
+            status = "pending", // Default status
+        } = req.body;
+
+        // Create a new subsidy application object
+        const newApplication = {
+            farmerId, // Use farmerId from params
+            subsidyId,
+            subsidyType,
+            supportingDocuments,
+            status,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
+
+        // Save the application to the database
+        const savedApplication = await SubsidyApplications.create(newApplication);
+
+        // Respond with the saved application
+        return res.status(201).json({
+            message: 'Subsidy application submitted successfully.',
+            application: savedApplication,
+        });
+    } catch (error) {
+        console.error('Error submitting application:', error);
+        return res.status(500).json({ message: 'Error submitting application', error });
+    }
+};
+
+
+

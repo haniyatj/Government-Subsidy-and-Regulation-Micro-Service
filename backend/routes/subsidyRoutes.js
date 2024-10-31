@@ -1,10 +1,14 @@
-
 const express = require('express');
-const { getApplicationStatus, changeApplicationStatus } = require('../controllers/subsidyController');
-//here we can keep adding whatever other controllers that we need
 const router = express.Router();
+const subsidyApplicationController = require('../controllers/subsidyApplicationController'); // Adjust the path to your controller file if necessary
 
-router.get('/:id/status', getApplicationStatus);
-router.post('/:id/status', changeApplicationStatus);
+// Route to get the status of an application by ID
+router.get('/:id/status', subsidyApplicationController.getApplicationStatus);
+
+// Route to change the status of an application by ID
+router.put('/:id/status', subsidyApplicationController.changeApplicationStatus);
+
+// Route to submit a new application
+router.post('/:id', subsidyApplicationController.submitApplication);
 
 module.exports = router;
