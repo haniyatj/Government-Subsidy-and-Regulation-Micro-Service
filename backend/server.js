@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const subsidyRoutes = require('./routes/subsidyRoutes');
 const subsidySearchRoutes = require('./routes/subsidySearchRoutes'); 
 const subsidyApplicationRoutes = require('./routes/ApplicationRoutes'); 
+const regulationsRoutes = require('./routes/regulations');
 
 const app = express();
 const server = http.createServer(app);
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/api/subsidyapplications', subsidyRoutes);
 app.use('/api/subsidies', subsidySearchRoutes); 
 app.use('/api/subsidyapplications', subsidyApplicationRoutes); 
+app.use('/api/regulations', regulationsRoutes);
 
 connectDB();
 
