@@ -7,7 +7,7 @@ const regulationsController = require('../controllers/regulationsController');
 router.get('/',regulationsController.getRegulations)
 
 //Route to get a filtered (by category and region) list of regulations for the feed 
-router.get('/filtered', getFilteredRegulations);
+router.get('/filtered', regulationsController.getFilteredRegulations);
 
 //Route to bookmark a regulation 
 router.post('/bookmark', regulationsController.bookmarkRegulation);
