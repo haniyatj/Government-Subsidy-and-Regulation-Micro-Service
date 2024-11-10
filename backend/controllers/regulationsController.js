@@ -1,11 +1,10 @@
 //const Regulation = require('../models/Regulations');
 
-// Controller to create a new regulation
+
 exports.createRegulation = async (req, res) => {
     try {
         const { title, description, effectiveDate, category, type, createdBy } = req.body;
-        
-        // Create a new regulation document
+       
         const newRegulation = await Regulation.create({
             title,
             description,
@@ -16,8 +15,19 @@ exports.createRegulation = async (req, res) => {
             createdAt: new Date(),
             updatedAt: new Date()
         });
+
+        const notification = await Notification.create({
+            id: uuidv4(),
+            userId: req.user.id, 
+            type: "new_regulation",
+            message: `A new regulation titled "${newRegulation.title}" has been added.`,
+            relatedId: newRegulation.id,
+            isRead: false,
+            createdAt: new Date().toISOString(),
+        });
+
         
-        res.status(201).json({ message: 'Regulation created successfully', regulation: newRegulation });
+        res.status(201).json({ message: 'Regulation created successfully', regulation: newRegulation, notification: notification });
     } catch (error) {
         res.status(500).json({ message: 'Failed to create regulation', error });
     }
