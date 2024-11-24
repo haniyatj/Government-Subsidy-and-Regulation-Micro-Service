@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/GovtDashboard";
+import FarmerDashoard from "./pages/FarmerDashoard"
+import ApplyForm from "./components/ApplyForm";
 
 const App = () => {
   return (
@@ -18,6 +20,9 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
 
         <Route path="/dashboard" element={<Dashboard />} /> {/* Your dashboard screen */}
+
+        <Route path="/FarmerDashoard" element={<FarmerDashoard />} /> 
+        <Route path="/ApplyForm" element={<ApplyForm />} /> 
 
       </Routes>
     </Router>
