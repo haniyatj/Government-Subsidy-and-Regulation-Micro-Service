@@ -2,11 +2,20 @@
 
 const express = require('express');
 const router = express.Router();
-const { getFilteredApplications, getApplicantApplicationHistory,getAuditLogsByApplicationId } = require('../controllers/ApplicationController');
+const subsidyApplicationController = require('../controllers/SubsidyApllicationController');
 
 
-router.get('/filter', getFilteredApplications);
-router.get('/history/:applicantId', getApplicantApplicationHistory);
-router.get('/applications/:applicationId/audit-logs',getAuditLogsByApplicationId);
+// Get all applications and create a new application
+router.route('/')
+    .post(subsidyApplicationController.createApplication)
+    .get(subsidyApplicationController.getAllApplications);
 
-module.exports = router;
+// Get, update, or delete a specific application by ID
+// Get, update, or delete a specific application by ID
+router.route('/:id')
+    .put(subsidyApplicationController.updateApplication)
+    .delete(subsidyApplicationController.deleteApplication);
+// router.get('/filter', getFilteredApplications);
+// router.get('/history/:applicantId', getApplicantApplicationHistory);
+// router.get('/applications/:applicationId/audit-logs',getAuditLogsByApplicationId);
+ module.exports = router;

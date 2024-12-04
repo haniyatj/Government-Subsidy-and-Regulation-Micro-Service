@@ -3,12 +3,9 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        
-        await mongoose.connect(process.env.MONGODB_URI, {  //we'll get the conn string from the DB team
+        await mongoose.connect("mongodb+srv://i211209:Xg5lmHfaQt0GN7tW@agrilink.8s85i.mongodb.net/Agrilink", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true, 
-            useFindAndModify: false, 
         });
         console.log('MongoDB connected successfully');
     } catch (error) {
