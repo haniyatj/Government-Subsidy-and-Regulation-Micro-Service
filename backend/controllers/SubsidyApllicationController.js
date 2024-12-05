@@ -7,7 +7,8 @@ const subsidyApplicationController = {
       // Get all subsidy applications
   async getAllApplications(req, res, next) {
     try {
-      const applications = await SubsidyApplication.find()
+        console.log ('www')
+        const applications = await SubsidyApplication.find()
         .populate("farmer", "farmDetails creditScore bankDetails")
         .populate("subsidy", "title category region amount description")
         .populate("supportingDocuments", "fileData fileType metadata")
@@ -16,7 +17,7 @@ const subsidyApplicationController = {
           path: "farmer",
           populate: {
             path: "user",
-            select: "username", // Only include username
+            select: "username", 
           },
         });
         console.log ('www')
@@ -31,21 +32,11 @@ const subsidyApplicationController = {
         try {
             const { farmer, subsidy, status, supportingDocuments } = req.body;
             console.log("farmer",farmer)
-           // const farmerExists = await FarmerProfile.findOne({ _id: farmer });
-           // console.log("farmerExists",farmerExists)
-            // if (!farmerExists) {
-            //     return next({ status: 404, message: 'Farmer profile not found' });
-            // }
             console.log("farmer",subsidy)
             console.log("farmer",subsidy)
             //const subsidyExists = await Subsidy.findOne({ _id: subsidy });
             console.log("farmer",subsidy)
-           // console.log("subsidyExists",subsidyExists)
-
-            // if (!subsidyExists) {
-            //     return next({ status: 404, message: 'Subsidy not found' });
-            // }
-
+          
             const newApplication = new SubsidyApplication({
                 farmer,
                 subsidy,
