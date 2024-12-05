@@ -4,16 +4,27 @@ const Subsidy = require('../models/Subsidy');
 
 const subsidyApplicationController = {
 
-    async getAllApplications(req, res, next) {
-        try {
-            const applications = await SubsidyApplication.find(); 
-            console.log("applications",applications)
-            res.status(200).json(applications);
+      // Get all subsidy applications
+  async getAllApplications(req, res, next) {
+    try {
+      const applications = await SubsidyApplication.find()
+        .populate("farmer", "farmDetails creditScore bankDetails")
+        .populate("subsidy", "title category region amount description")
+        .populate("supportingDocuments", "fileData fileType metadata")
 
-        } catch (error) {
-            next({ status: 500, message: 'Internal Server Error', error });
-        }
-    },
+        .populate({
+          path: "farmer",
+          populate: {
+            path: "user",
+            select: "username", // Only include username
+          },
+        });
+        console.log ('www')
+        res.json (applications)
+    } catch (error) {
+      next({ status: 500, message: "Internal Server Error", error });
+    }
+  },
   
     // Create a new subsidy application
     async createApplication(req, res, next) {
