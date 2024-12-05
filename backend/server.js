@@ -9,7 +9,7 @@ const subsidyRoutes = require('./routes/subsidyRoutes');
 const subsidySearchRoutes = require('./routes/subsidySearchRoutes');
 const subsidyApplicationRoutes = require('./routes/ApplicationRoutes');
 const regulationsRoutes = require('./routes/regulations');
-const uploadRoutes = require('./routes/documentRoutes'); 
+const documentRoutes = require('./routes/documentRoutes'); 
 
 const app = express();
 const server = http.createServer(app);
@@ -33,7 +33,9 @@ app.use('/api/regulations', regulationsRoutes);
 
 // Document upload routes (added here)
 // Document upload routes (added here)
-app.use('/api/upload', uploadRoutes); 
+//app.use('/api/upload', uploadRoutes); 
+// Document routes
+app.use('/api/upload', documentRoutes);
 
 
 // MongoDB Connection

@@ -6,9 +6,10 @@ const subsidyApplicationController = {
 
     async getAllApplications(req, res, next) {
         try {
-            const applications = await SubsidyApplication.find(); // No populate
+            const applications = await SubsidyApplication.find(); 
             console.log("applications",applications)
             res.status(200).json(applications);
+
         } catch (error) {
             next({ status: 500, message: 'Internal Server Error', error });
         }

@@ -1,33 +1,25 @@
-//multerMiddleware.js
 const multer = require('multer');
-const path = require('path');
 
-// Define where to store the uploaded files
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Path to save files locally (ensure this folder exists)
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname); // Extract file extension
-        const filename = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`; // Generate a unique filename
-        cb(null, filename); // Set the final filename
-    },
-});
+// File size limit in bytes (e.g., 5MB)
+const MAX_FILE_SIZE = 5 * 1024 * 1024; 
 
-// Set up Multer to handle file uploads
+// Multer storage in memory
+const storage = multer.memoryStorage();
+
+// File filter for PDF files
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'application/pdf') {
+        cb(null, true); // Accept file
+    } else {
+        cb(new Error('Only PDF files are allowed!'), false); // Reject file
+    }
+};
+
+// Multer upload middleware
 const upload = multer({
-    storage: storage,
-    limits: { fileSize: 50 * 1024 * 1024 }, // Set file size limit (e.g., 50MB)
-    fileFilter: (req, file, cb) => {
-        const allowedTypes = /pdf|jpg|jpeg|png/; // Allowed file types (e.g., PDF, JPG, PNG)
-        const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-        const mimeType = allowedTypes.test(file.mimetype);
-
-        if (extname && mimeType) {
-            return cb(null, true); // Accept the file
-        }
-        cb('Error: File type not supported!');
-    },
-}).fields([{ name: 'cnicDocuments', maxCount: 5 }, { name: 'landDocuments', maxCount: 5 }]); // Allow multiple files
+    storage,
+    limits: { fileSize: MAX_FILE_SIZE },
+    fileFilter,
+});
 
 module.exports = upload;

@@ -1,9 +1,15 @@
+// routes/documentRoutes.js
 const express = require('express');
+const upload = require('../Middleware/multerMiddleware'); 
+const documentController = require('../controllers/documentController');
+
 const router = express.Router();
-const { uploadDocuments } = require('../controllers/documentController');
-const multer = require('../MiddleWare/multerMiddleware');
+
+// Route to add a document
+router.post('/add', upload.single('file'), documentController.addDocument);
 
 
-router.post('/upload', multer, uploadDocuments);
+// Route to get a document
+router.get('/:id', documentController.getDocument);
 
 module.exports = router;
