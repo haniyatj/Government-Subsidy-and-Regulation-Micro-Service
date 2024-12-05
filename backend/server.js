@@ -5,7 +5,6 @@ const multer = require('multer');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const subsidyRoutes = require('./routes/subsidyRoutes');
 const subsidySearchRoutes = require('./routes/subsidySearchRoutes');
 const subsidyApplicationRoutes = require('./routes/ApplicationRoutes');
 const regulationsRoutes = require('./routes/regulations');
@@ -26,7 +25,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/subsidyapplications', subsidyRoutes);
+
 app.use('/api/subsidies', subsidySearchRoutes);
 app.use('/api/subsidyapplications', subsidyApplicationRoutes);
 app.use('/api/regulations', regulationsRoutes);
