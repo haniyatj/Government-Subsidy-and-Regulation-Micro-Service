@@ -1,6 +1,8 @@
 const SubsidyApplication = require('../models/SubsidyApplication');
 const FarmerProfile = require('../models/FarmerProfile');
 const Subsidy = require('../models/Subsidy');
+const User = require('../models/User'); // Adjust the path to your model file
+
 
 const subsidyApplicationController = {
 
@@ -22,8 +24,9 @@ const subsidyApplicationController = {
         console.log ('www')
         res.json (applications)
     } catch (error) {
-      next({ status: 500, message: "Internal Server Error", error });
-    }
+        console.error("Error fetching subsidy applications:", error);
+        next({ status: 500, message: "Internal Server Error", error });
+      }
   },
   
     // Create a new subsidy application
