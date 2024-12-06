@@ -13,6 +13,7 @@ router.route('/')
 // Get, update, or delete a specific application by ID
 // Get, update, or delete a specific application by ID
 router.route('/:id')
+    .get(subsidyApplicationController.getApplicationById)
     .put(subsidyApplicationController.updateApplication)
     .delete(subsidyApplicationController.deleteApplication);
 // router.get('/filter', getFilteredApplications);

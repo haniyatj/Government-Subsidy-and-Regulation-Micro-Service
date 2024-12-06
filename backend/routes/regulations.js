@@ -1,24 +1,19 @@
 const express = require('express');
+const regulationController = require('../controllers/regulationsController');
+
 const router = express.Router();
-const regulationsController = require('../controllers/regulationsController');
 
+router.route('/')
+    .get(regulationController.getAllRegulations)
+    .post(regulationController.createRegulation);
 
-//Route to get a sorted list of regulations for the feed
-router.get('/',regulationsController.getRegulations)
+router.route('/:id')
+    .get(regulationController.getRegulationById)
+    .put(regulationController.updateRegulation)
+    .delete(regulationController.deleteRegulation);
 
-//Route to get a filtered (by category and region) list of regulations for the feed 
-router.get('/filtered', regulationsController.getFilteredRegulations);
-
-//Route to bookmark a regulation 
-router.post('/bookmark', regulationsController.bookmarkRegulation);
-
-// Route to create a new regulation
-router.post('/', regulationsController.createRegulation);
-
-// Route to edit an existing regulation
-router.put('/:id', regulationsController.editRegulation);
-
-// Route to delete an existing regulation
-router.delete('/:id', regulationsController.deleteRegulation);
+router.route('/:id/bookmarks')
+    .post(regulationController.addBookmark)
+    .delete(regulationController.removeBookmark);
 
 module.exports = router;

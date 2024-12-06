@@ -9,6 +9,7 @@ const subsidySearchRoutes = require('./routes/subsidySearchRoutes');
 const subsidyApplicationRoutes = require('./routes/ApplicationRoutes');
 const regulationsRoutes = require('./routes/regulations');
 const documentRoutes = require('./routes/documentRoutes'); 
+const Subsidy=require('./routes/subsidyRoutes')
 
 const app = express();
 const server = http.createServer(app);
@@ -26,7 +27,8 @@ app.use(express.json());
 
 // Routes
 
-app.use('/api/subsidies', subsidySearchRoutes);
+app.use('api/subsidy', subsidySearchRoutes);
+app.use('/api/subsidies', Subsidy); //subsidy routes
 app.use('/api/subsidyapplications', subsidyApplicationRoutes);
 app.use('/api/regulations', regulationsRoutes);
 
